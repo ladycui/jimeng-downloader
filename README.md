@@ -1,3 +1,5 @@
+English | [简体中文](README_zh-CN.md)
+
 # Jimeng Image Downloader
 
 This is a Chrome extension that adds a convenient download button to images on the `jimeng.jianying.com` website, allowing users to easily save images in PNG format.
