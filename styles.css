@@ -1,0 +1,26 @@
+.jimeng-image-wrapper {
+    /* This is a wrapper for the image, its styles are set dynamically by the content script */
+}
+
+.jimeng-download-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 32px;
+    height: 32px;
+    background-size: 20px 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    z-index: 10000;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.jimeng-image-wrapper:hover .jimeng-download-btn {
+    opacity: 1;
+}

@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Jimeng Image Downloader",
+  "version": "0.1",
+  "description": "Adds a download button to images on hover, allowing download as PNG.",
+  "permissions": [
+    "downloads"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["download-icon.svg"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
+    "48": "icon48.svg",
+    "128": "icon128.svg"
+  }
+}
