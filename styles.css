@@ -1,9 +1,5 @@
-.jimeng-image-wrapper {
-    /* This is a wrapper for the image, its styles are set dynamically by the content script */
-}
-
 .jimeng-download-btn {
-    position: absolute;
+    position: absolute; /* Changed from relative to absolute for positioning on the body */
     top: 10px;
     left: 10px;
     width: 32px;
@@ -13,14 +9,10 @@
     background-repeat: no-repeat;
     border: none;
     cursor: pointer;
-    z-index: 10000;
+    z-index: 2147483647; /* Max z-index to appear on top of everything */
     padding: 0;
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 5px;
-    opacity: 0;
+    opacity: 0; /* Initially hidden */
     transition: opacity 0.2s ease-in-out;
-}
-
-.jimeng-image-wrapper:hover .jimeng-download-btn {
-    opacity: 1;
 }
