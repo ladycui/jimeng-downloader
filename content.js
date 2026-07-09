@@ -107,15 +107,32 @@ function downloadImageAsPng(img) {
     tempImg.crossOrigin = "Anonymous";
 
     tempImg.onload = () => {
-        canvas.width = tempImg.naturalWidth;
-        canvas.height = tempImg.naturalHeight;
-        ctx.drawImage(tempImg, 0, 0);
-        canvas.toBlob((blob) => {
-            const url = URL.createObjectURL(blob);
-            chrome.runtime.sendMessage({ action: "download", url: url, filename: filename }, () => {
-                URL.revokeObjectURL(url);
-            });
-        }, 'image/png');
+        chrome.storage.local.get({ resolutionMode: 'default' }, (data) => {
+            let scale = 1;
+            if (data.resolutionMode === 'hd') {
+                const minDim = Math.min(tempImg.naturalWidth, tempImg.naturalHeight);
+                if (minDim < 1440 && minDim > 0) {
+                    scale = 1440 / minDim;
+                    console.log(`Jimeng Downloader: Upscaling image by ${scale.toFixed(2)}x to reach HD resolution.`);
+                }
+            }
+
+            canvas.width = tempImg.naturalWidth * scale;
+            canvas.height = tempImg.naturalHeight * scale;
+            ctx.drawImage(tempImg, 0, 0, canvas.width, canvas.height);
+            
+            let finalFilename = filename;
+            if (data.resolutionMode === 'hd') {
+                finalFilename = `${sanitizedFilename}_${Math.round(canvas.width)}x${Math.round(canvas.height)}.png`;
+            }
+
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                chrome.runtime.sendMessage({ action: "download", url: url, filename: finalFilename }, () => {
+                    URL.revokeObjectURL(url);
+                });
+            }, 'image/png');
+        });
     };
     tempImg.onerror = () => {
         // console.warn('Jimeng Downloader: Canvas conversion failed. Falling back to direct download.');
